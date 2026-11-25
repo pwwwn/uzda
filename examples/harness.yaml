@@ -1,0 +1,64 @@
+model:
+  url: http://localhost:9931/v1
+  name: qwen3.5-4b
+
+prompts:
+  - name: base
+    path: ./prompts/base.md
+    policy: pin
+  - name: report_style
+    path: ./prompts/report_style.md
+    policy: pin
+
+tools:
+  - name: read_text
+    run: cat
+    desc: Прочитать содержимое текстового файла целиком.
+    timeout: 10
+  - name: grep_content
+    run: grep
+    desc: Поиск по содержимому файлов (-r -n маска каталог).
+
+skills:
+  - name: verify_answer
+    desc: Проверить, что каждое утверждение ответа опирается на найденный текст.
+    instr: ./skills/verify_answer.md
+
+limits:
+  turns: 30
+  time: 300
+  cost: 0.15
+  loop:
+    max_repeat: 3
+    window: 10
+  context:
+    window: 48000
+    full_at: 0.9
+
+stages:
+  - name: begin
+    desc: Определить задачу и выбрать следующий шаг.
+    prompt: [base]
+    tools: []
+    skills: []
+    next: [search_info]
+
+  - name: search_info
+    desc: Найти нужные сведения в файлах.
+    prompt: [base]
+    tools: [grep_content, read_text]
+    history: brief
+    next: [analyze, report]
+
+  - name: analyze
+    desc: Разобрать найденное, проверить соответствие.
+    prompt: [base]
+    tools: [read_text]
+    skills: [verify_answer]
+    history: full
+    next: [report]
+
+  - name: report
+    desc: Сформировать итоговый ответ со ссылками на источники.
+    prompt: [base, report_style]
+    tools: []
