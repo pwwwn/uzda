@@ -1,0 +1,12 @@
+params:
+  - name: pattern
+    type: string
+    desc: Exact text to search for, ignoring case.
+  - name: path
+    type: string
+    desc: Directory of documents to search.
+argv:
+  - "-rInFi"
+  - "--"
+  - "{pattern}"
+  - "{path}"

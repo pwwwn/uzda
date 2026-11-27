@@ -1,0 +1,7 @@
+params:
+  - name: path
+    type: string
+    desc: Document path relative to the examples directory, or an absolute path.
+argv:
+  - "--"
+  - "{path}"

@@ -1,0 +1,13 @@
+model:
+  url: http://localhost:9931/v1
+  name: default
+
+prompts:
+  - name: base
+    path: examples/prompts/base.md
+
+tools:
+  - name: run
+    run: bash
+    shell: true
+    desc: Run a bash command in the terminal.

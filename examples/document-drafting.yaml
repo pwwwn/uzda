@@ -1,0 +1,25 @@
+model:
+  url: http://localhost:9931/v1
+  name: default
+prompts:
+  - name: drafting
+    path: prompts/document-drafting.md
+tools:
+  - name: read_document
+    run: cat
+    schema: read-document.yaml
+    desc: Read a UTF-8 text file at the specified path.
+    timeout: 30s
+  - name: write_document
+    run: python3 write-document.py
+    schema: write-document.yaml
+    desc: Create a new text document; existing files are not overwritten.
+    timeout: 10s
+  - name: search_documents
+    run: grep
+    schema: search-documents.yaml
+    desc: Search lines of text files in a directory, ignoring case.
+    timeout: 30s
+limits:
+  turns: 8
+  time: 120

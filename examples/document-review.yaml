@@ -1,0 +1,20 @@
+model:
+  url: http://localhost:9931/v1
+  name: default
+prompts:
+  - name: review
+    path: prompts/document-review.md
+tools:
+  - name: read_document
+    run: cat
+    schema: read-document.yaml
+    desc: Read a UTF-8 text file at the specified path.
+    timeout: 30s
+  - name: search_documents
+    run: grep
+    schema: search-documents.yaml
+    desc: Search lines of text files in a directory, ignoring case.
+    timeout: 30s
+limits:
+  turns: 8
+  time: 120

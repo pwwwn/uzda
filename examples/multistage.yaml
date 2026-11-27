@@ -1,0 +1,20 @@
+model:
+  url: http://localhost:9931/v1
+  name: default
+prompts:
+  - name: analyze
+    path: prompts/multistage-analyze.md
+  - name: review
+    path: prompts/multistage-review.md
+stages:
+  - name: analyze
+    desc: Analyze the request and prepare an answer for review.
+    prompt: [analyze]
+    next: [review]
+  - name: review
+    desc: Review the prepared answer and provide the final answer.
+    prompt: [review]
+    next: []
+limits:
+  turns: 12
+  time: 120

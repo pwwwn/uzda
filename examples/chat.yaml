@@ -1,0 +1,6 @@
+model:
+  url: http://localhost:9931/v1
+  name: default
+limits:
+  turns: 8
+  time: 120

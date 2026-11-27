@@ -1,0 +1,10 @@
+params:
+  - name: path
+    type: string
+    desc: Path of the new text file.
+  - name: content
+    type: string
+    desc: Complete UTF-8 document contents.
+argv:
+  - "{path}"
+  - "{content}"
